@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.inspur.report.mapper.BugReportMapper">
+    <resultMap id="BaseResultMap" type="com.inspur.report.domain.ProjectStatisticResult">
+        <id column="ID" property="id" jdbcType="INTEGER"/>
+        <result column="PROJECT_DEPT" property="projectDept" jdbcType="VARCHAR"/>
+        <result column="PROJECT_MANAGER" property="projectManager" jdbcType="VARCHAR"/>
+        <result column="PROJECT_UUID" property="projectUuid" jdbcType="VARCHAR"/>
+        <result column="PROJECT_ENAME" property="projectEName" jdbcType="VARCHAR"/>
+        <result column="PROJECT_NAME" property="projectName" jdbcType="VARCHAR"/>
+        <result column="TOTALLINES" property="totalLines" jdbcType="INTEGER"/>
+        <result column="PERALLTHOUSAND" property="perAllThousand" jdbcType="DOUBLE"/>
+        <result column="PERLEFTTHOUSAND" property="perLeftThousand" jdbcType="DOUBLE"/>
+        <result column="ALLQUESTIONS" property="allQuestions" jdbcType="INTEGER"/>
+        <result column="LEFTQUESTIONS" property="leftQuestions" jdbcType="INTEGER"/>
+        <result column="STATISTICDATE" property="statisticDate" jdbcType="DATE"/>
+        <result column="PERAL_MIN" property="extAttrs.peralMin" jdbcType="DOUBLE"/>
+        <result column="PERAL_MAX" property="extAttrs.peralMax" jdbcType="DOUBLE"/>
+        <result column="TOTAL" property="extAttrs.total" jdbcType="DOUBLE"/>
+
+    </resultMap>
+
+    <sql id="allColumns">
+        ID,PROJECT_DEPT,PROJECT_MANAGER,PROJECT_UUID,PROJECT_ENAME,PROJECT_NAME,TOTALLINES,PERALLTHOUSAND,PERLEFTTHOUSAND,
+        ALLQUESTIONS,LEFTQUESTIONS,STATISTICDATE
+    </sql>
+
+    <!--查询公司积分账户可用积分-->
+    <select id="selectBug" resultMap="BaseResultMap">
+         select p1.*,
+               peral_min,
+               peral_max,
+               (perallthousand - peral_min) / peral_max total
+          from project_statistic p1
+          left join (SELECT min(perallthousand) peral_min, project_dept
+                       FROM project_statistic
+                      group by project_dept) P2
+            on p1.project_dept = p2.project_dept
+          left join (select max(perallthousand) peral_max, project_dept
+                       from project_statistic
+                      group by project_dept) p3
+            on p1.project_dept = p3.project_dept
+    </select>
+
+
+</mapper>
