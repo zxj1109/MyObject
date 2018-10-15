@@ -36,24 +36,25 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- 添加JDBC的驱动类（如果是dubbo项目，该配置定义在api项目provider的pom文件中） -->
         <dependency>
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc6</artifactId>
             <version>1.0</version>
         </dependency>
-
+        <!--mybatis依赖-->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>1.3.2</version>
         </dependency>
-
+        <!--添加谷歌JSON處理依賴-->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.8.5</version>
         </dependency>
-
+        <!--github-->
         <dependency>
             <groupId>com.github.sgroschupf</groupId>
             <artifactId>zkclient</artifactId>
@@ -62,7 +63,7 @@
     </dependencies>
 
     <build>
-
+        <!--项目使用名-->
         <finalName>report</finalName>
 
         <plugins>
@@ -70,7 +71,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-
+            <!--添加的相关maven命令依赖-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -110,7 +111,7 @@
                 </executions>
             </plugin>
         </plugins>
-
+        <!--dao层依赖,自动扫描.xml文件-->
         <resources>
             <resource>
                 <directory>src/main/java</directory>

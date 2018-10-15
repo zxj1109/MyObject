@@ -13,8 +13,9 @@ import java.util.List;
  * @Date 2018-10-14 19:12
  * @Version 1.0
  **/
-@Mapper
-//@Repository
+//@Mapper 和@Repository 都可以
+//@Mapper
+@Repository
 public interface BugReportMapper {
 
     List<ProjectStatisticResult> selectBug();
